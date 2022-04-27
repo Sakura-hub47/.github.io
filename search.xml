@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title></title>
+    <url>/2022/04/26/%E7%BD%91%E7%AB%99%E6%90%AD%E5%BB%BA/</url>
+    <content><![CDATA[<p>引自知乎<a href="https://zhuanlan.zhihu.com/p/26625249">https://zhuanlan.zhihu.com/p/26625249</a></p>
+<p>引自<a href="https://blog.woooo.tech/2019/08/18/%E4%BD%BF%E7%94%A8GitHub%E5%92%8CHEXO%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/">https://blog.woooo.tech/2019/08/18/%E4%BD%BF%E7%94%A8GitHub%E5%92%8CHEXO%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/</a></p>
+<p>引自<a href="https://flysara.github.io/2020/03/10/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A202/">https://flysara.github.io/2020/03/10/%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A202/</a></p>
+<p>新建博文以后，更新上传，使用<code>hexo d</code>时，发现控制台报错，报错信息如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ERROR: Repository not found. </span><br><span class="line">fatal: Could not read from remote repository</span><br></pre></td></tr></table></figure>
+
+<p>翻译过来就是不能找到远程仓库，我查看了其他的博文，都是重新配置生成公钥，可是我的公钥已经生成，并且也已经和远程仓库连接好了，所以就百思不得其解。最后终于找到了解决办法</p>
+<h3 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h3><p>首先来讲一些原理和规则吧：<br>git的两种上传方式：</p>
+<ul>
+<li><p>HTTPS</p>
+</li>
+<li><p>SSH</p>
+<p>这两种方式的URL是不同的</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// HTTPS方式</span><br><span class="line">https://github.com/xxxx/StudyEveryDay.git</span><br><span class="line">// SSH方式</span><br><span class="line">git@github.com:xxxx/StudyEveryDay.git</span><br></pre></td></tr></table></figure>
+
+<p>其中，我在该项目根目录下的_config文件中，对git的部署设置如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  # repository: git@github.com:flysara/flysara.github.io.git</span><br><span class="line">  repository: https://gitee.com/luckyTeresa/luckyTeresa.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>需要注意：</p>
+<ul>
+<li>上面的repository地址并不是仓库的地址，而是你下克隆项目时弹出的那个地址</li>
+<li>如果使用git就选择SSH，如果选择HTTPS那么相应的type字段也要修改为https</li>
+</ul>
+<p>而我这次的错误和坑就是上面的第二点，我设置的type时git，但是我创建的仓库的链接地址确是使用的https的形式，所以没有办法跟远程仓库进行连接，从而出现了找不到远程仓库的错误。</p>
+<p>了解了问题的原因以后，我修改的代码如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repository:  git@gitee.com:luckyTeresa/luckyTeresa.git</span><br><span class="line">  branch: master</span><br></pre></td></tr></table></figure>
+
+<p>最后显示部署成功</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2022/04/26/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+</search>
