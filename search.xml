@@ -5,7 +5,6 @@
     <url>/2022/09/26/A-Voxel-Graph-CNN-for-Object-Classification-with-Event-Cameras/</url>
     <content><![CDATA[<p>A Voxel Graph CNN for Object Classification with Event Cameras论文的阅读</p>
 <span id="more"></span>
-
 <h2 id="论文概述"><a href="#论文概述" class="headerlink" title="论文概述"></a>论文概述</h2><h3 id="Event-camera的特点："><a href="#Event-camera的特点：" class="headerlink" title="Event camera的特点："></a>Event camera的特点：</h3><ol>
 <li>low power consumption（低能耗）</li>
 <li>high dynamic range（高动态范围）</li>
@@ -103,23 +102,23 @@
 <ul>
 <li>proposing a multi-scale feature relational layer (MFRL) to extract spatial and motion cues from     each vertex discriminatively concerning its distances to neighbors.</li>
 </ul>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="流程图："><a href="#流程图：" class="headerlink" title="流程图："></a>流程图：</h3><p>![image-20220926202411773](A Voxel Graph CNN for Object Classification with Event Cameras-1.png)</p>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="流程图："><a href="#流程图：" class="headerlink" title="流程图："></a>流程图：</h3><p><img src="/2022/09/26/A-Voxel-Graph-CNN-for-Object-Classification-with-Event-Cameras/A Voxel Graph CNN for Object Classification with Event Cameras-1.png" alt="image-20220926202411773"></p>
 <h3 id="Graph-Construction——Voxelization"><a href="#Graph-Construction——Voxelization" class="headerlink" title="Graph Construction——Voxelization"></a>Graph Construction——Voxelization</h3><p>Event streams representation:</p>
-<p>$\lbrace e_{i} \rbrace&#x3D;\lbrace x_i,y_i,t_i,p_i \rbrace_N$</p>
+<p>$\lbrace e_{i} \rbrace=\lbrace x_i,y_i,t_i,p_i \rbrace_N$</p>
 <p>Time-dimension normalization:</p>
-<p>$\lbrace t_i \rbrace&#x3D;\frac{\lbrace t_i-t_0 \rbrace_N \times A}{t_{N-1}-t_0}$</p>
+<p>$\lbrace t_i \rbrace=\frac{\lbrace t_i-t_0 \rbrace_N \times A}{t_{N-1}-t_0}$</p>
 <p>spatio-temporal resolution: {H,W,A}</p>
 <p>size of each voxel: $v_h, v_w ,v_a$</p>
 <p>The resulting voxels in spatio-temporal space is of size:</p>
-<p>$H_{voxel}&#x3D;H&#x2F;v_h , W_{voxel}&#x3D;W&#x2F;v_w  , A_{voxel}&#x3D;A&#x2F;v_a  $</p>
-<p>the coordinate of i-th vertex $U_i &#x3D; (x_i^v , y_i^v , t_i^v) $ is with the range of $\lbrace H_{voxel}, W_{voxel}, A_{voxel} \rbrace$</p>
+<p>$H_{voxel}=H/v_h , W_{voxel}=W/v_w  , A_{voxel}=A/v_a  $</p>
+<p>the coordinate of i-th vertex $U_i = (x_i^v , y_i^v , t_i^v) $ is with the range of $\lbrace H_{voxel}, W_{voxel}, A_{voxel} \rbrace$</p>
 <h3 id="Graph-Construction——Vertex-selection"><a href="#Graph-Construction——Vertex-selection" class="headerlink" title="Graph Construction——Vertex selection"></a>Graph Construction——Vertex selection</h3><p>find N_p vertices with the largest number of event points inside and feed them into the learning system</p>
-<h3 id="Graph-Construction——Feature-calculation"><a href="#Graph-Construction——Feature-calculation" class="headerlink" title="Graph Construction——Feature calculation"></a>Graph Construction——Feature calculation</h3><p>$F_i^{2d}(x,y)&#x3D;\sum\limits_{i}^{N_v}p_i^{in}\delta(x-x_i^{in},y-y_i^{in})t_i^{in}$</p>
+<h3 id="Graph-Construction——Feature-calculation"><a href="#Graph-Construction——Feature-calculation" class="headerlink" title="Graph Construction——Feature calculation"></a>Graph Construction——Feature calculation</h3><p>$F_i^{2d}(x,y)=\sum\limits_{i}^{N_v}p_i^{in}\delta(x-x_i^{in},y-y_i^{in})t_i^{in}$</p>
 <p>$N_v$ denotes the number of events inside the vertex $V_i$</p>
 <p>$F_i^{2d}\in \mathbb{R}^{1\times v_h\times v_b}$</p>
 <p>Then,$\lbrace F_i \rbrace _{N_p}\in \mathbb{R}^{N_p\times v_h\times v_b}$</p>
-<h3 id="EV-VGCNN"><a href="#EV-VGCNN" class="headerlink" title="EV-VGCNN"></a>EV-VGCNN</h3><p>![image-20220926214002122](A Voxel Graph CNN for Object Classification with Event Cameras-2.png)</p>
-<h3 id="EV-VGCNN——MFRL"><a href="#EV-VGCNN——MFRL" class="headerlink" title="EV-VGCNN——MFRL"></a>EV-VGCNN——MFRL</h3><p>![image-20220926214026543](A Voxel Graph CNN for Object Classification with Event Cameras-3.png)</p>
+<h3 id="EV-VGCNN"><a href="#EV-VGCNN" class="headerlink" title="EV-VGCNN"></a>EV-VGCNN</h3><p><img src="/2022/09/26/A-Voxel-Graph-CNN-for-Object-Classification-with-Event-Cameras/A Voxel Graph CNN for Object Classification with Event Cameras-2.png" alt="image-20220926214002122"></p>
+<h3 id="EV-VGCNN——MFRL"><a href="#EV-VGCNN——MFRL" class="headerlink" title="EV-VGCNN——MFRL"></a>EV-VGCNN——MFRL</h3><p><img src="/2022/09/26/A-Voxel-Graph-CNN-for-Object-Classification-with-Event-Cameras/A Voxel Graph CNN for Object Classification with Event Cameras-3.png" alt="image-20220926214026543"></p>
 ]]></content>
       <categories>
         <category>论文阅读</category>
@@ -133,18 +132,13 @@
     <url>/2022/04/26/hello-world/</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <span id="more"></span>
-
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
 <p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
 <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 ]]></content>
       <categories>
@@ -156,9 +150,6 @@
     <url>/2022/04/27/%E4%BD%BF%E7%94%A8hexo%E5%92%8Cnext%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[<p>笔者进行学习如何搭建一个属于自己的博客，在网上学习了很多大牛的经验。本文汇总了一些在我搭建过程中对我帮助比较大的网址，介绍了如何使用hexo和next搭建并美化博客。</p>
 <span id="more"></span>
-
-
-
 <h2 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h2><p><a href="http://blog.woooo.tech/2019/08/18/%E4%BD%BF%E7%94%A8GitHub%E5%92%8CHEXO%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/">使用GitHub和Hexo的博客搭建过程</a></p>
 <h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p><a href="http://blog.woooo.tech/2019/08/19/%E7%94%A8Next%E7%BE%8E%E5%8C%96-HEXO-GitHub-%E5%8D%9A%E5%AE%A2/">用Next美化博客</a></p>
 <p><a href="https://xduqinian.github.io/2022/01/11/hexo%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">一些问题和解决方式</a></p>
@@ -166,9 +157,7 @@
 <h2 id="日常使用"><a href="#日常使用" class="headerlink" title="日常使用"></a>日常使用</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><p>打开博客所在文件夹，右键Git Bash Here</p>
 <p>输入·</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo new post &quot;文章名称&quot;</span><br></pre></td></tr></table></figure>
-
 <h3 id="更新到github"><a href="#更新到github" class="headerlink" title="更新到github"></a>更新到github</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g -d</span><br></pre></td></tr></table></figure>
-
 ]]></content>
       <categories>
         <category>博客网站搭建</category>
